@@ -115,6 +115,10 @@ public class Lexer(string source)
             case ',': return GetNewToken(TokenType.Comma, ",");
             case ';': return GetNewToken(TokenType.Semicolon, ";");
             case '.': return GetNewToken(TokenType.Accessor, ".");
+            
+            case '$': return GetNewToken(TokenType.StringInterpolation, "$");
+            case '@': return GetNewToken(TokenType.Info, "@");
+            
             case EOL_CHAR: return GetNewToken(TokenType.EOL, EOL_CHAR.ToString());
         }
 

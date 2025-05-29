@@ -45,6 +45,8 @@ public enum TokenType : byte
     LessThanEqualTo,
     
     // OTHER
+    StringInterpolation,
+    Info,
     String,
     Numeric,
     BoolTrue,

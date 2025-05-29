@@ -1,1 +1,2 @@
-﻿let sausage = 452.643634
+﻿let string sausage = $"test"
+let string test = @sausage.symbol

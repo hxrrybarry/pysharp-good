@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("pysharp-good")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b738936ee0e8104c9fd8b91e5ce99bb129f5d642")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dcac3b1389f87b7f7083f240f8c1c81f9322fb47")]
 [assembly: System.Reflection.AssemblyProductAttribute("pysharp-good")]
 [assembly: System.Reflection.AssemblyTitleAttribute("pysharp-good")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
