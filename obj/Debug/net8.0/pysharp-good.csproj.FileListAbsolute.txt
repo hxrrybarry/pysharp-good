@@ -12,3 +12,4 @@ C:\Users\HarrisonO’Leary\RiderProjects\pysharp-good\pysharp-good\obj\Debug\net
 C:\Users\HarrisonO’Leary\RiderProjects\pysharp-good\pysharp-good\obj\Debug\net8.0\pysharp-good.pdb
 C:\Users\HarrisonO’Leary\RiderProjects\pysharp-good\pysharp-good\obj\Debug\net8.0\pysharp-good.genruntimeconfig.cache
 C:\Users\HarrisonO’Leary\RiderProjects\pysharp-good\pysharp-good\obj\Debug\net8.0\ref\pysharp-good.dll
+C:\Users\HarrisonO’Leary\RiderProjects\pysharp-good\pysharp-good\obj\Debug\net8.0\pysharp-good.sourcelink.json

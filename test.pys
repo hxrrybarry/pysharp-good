@@ -1,6 +1,1 @@
-﻿let sausage = 452
-
-// test comment
-let x = "test\nwilly
-let boolTest = true
-let secondBoolTest = false
+﻿let sausage = 452.643634

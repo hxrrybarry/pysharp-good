@@ -11,6 +11,7 @@ public enum TokenType : byte
     FunctionDeclaration,
     If,
     ElseIf,
+    Else,
     ForLoop,
     WhileLoop,
     ClassDeclaration,
@@ -19,6 +20,8 @@ public enum TokenType : byte
     Return,
     
     // MATHEMATICAL
+    IncrementOne,
+    DecrementOne,
     DeclarativeEquals,
     Plus,
     Subtract,
@@ -48,10 +51,13 @@ public enum TokenType : byte
     BoolFalse,
     OpenBracket,
     CloseBracket,
+    OpenSquareBracket,
+    CloseSquareBracket,
     OpenBrace,
     CloseBrace,
     Comma,
     Accessor,
+    Semicolon,
     EOL,
     EOF,
     Stupid

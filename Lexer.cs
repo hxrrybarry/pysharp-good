@@ -81,6 +81,7 @@ public class Lexer(string source)
             {
                 stringValue += Advance();
             }
+            
         }
         
         Expect('"', $"Unterminated string at {startCol}:{startRow}.");
@@ -93,8 +94,8 @@ public class Lexer(string source)
         char c = Advance();
         switch (c)
         {
-            case '+': return Match('=') ? GetNewToken(TokenType.PlusEquals, "+=")      : GetNewToken(TokenType.Plus, "+");
-            case '-': return Match('=') ? GetNewToken(TokenType.SubtractEquals, "-=")  : GetNewToken(TokenType.Subtract, "-");
+            case '+': return Match('=') ? GetNewToken(TokenType.PlusEquals, "+=")      : Match('+') ? GetNewToken(TokenType.IncrementOne, "++") : GetNewToken(TokenType.Plus, "+");
+            case '-': return Match('=') ? GetNewToken(TokenType.SubtractEquals, "-=")  : Match('-') ? GetNewToken(TokenType.DecrementOne, "--") : GetNewToken(TokenType.Subtract, "-");
             case '*': return Match('=') ? GetNewToken(TokenType.MultiplyEquals, "*=")  : GetNewToken(TokenType.Multiply, "*");
             case '/': return Match('=') ? GetNewToken(TokenType.DivideEquals, "/=")    : GetNewToken(TokenType.Divide, "/");
             case '%': return Match('=') ? GetNewToken(TokenType.ModuloEquals, "%=")    : GetNewToken(TokenType.Modulo, "%");
@@ -107,15 +108,18 @@ public class Lexer(string source)
 
             case '(': return GetNewToken(TokenType.OpenBracket, "(");
             case ')': return GetNewToken(TokenType.CloseBracket, ")");
+            case '[': return GetNewToken(TokenType.OpenSquareBracket, "[");
+            case ']': return GetNewToken(TokenType.CloseSquareBracket, "]");
             case '{': return GetNewToken(TokenType.OpenBrace, "{");
             case '}': return GetNewToken(TokenType.CloseBrace, "}");
             case ',': return GetNewToken(TokenType.Comma, ",");
+            case ';': return GetNewToken(TokenType.Semicolon, ";");
             case '.': return GetNewToken(TokenType.Accessor, ".");
             case EOL_CHAR: return GetNewToken(TokenType.EOL, EOL_CHAR.ToString());
         }
 
         // uh oh
-        return new Token(TokenType.Stupid, c.ToString(), startCol, startRow);
+        throw new SyntaxErrorException($"Lexing failure: syntax error at {_col}:{_row} unresolved token '{c}'");
         Token GetNewToken(TokenType t, string v) => new Token(t, v, startCol, startRow);
     }
     
@@ -135,10 +139,16 @@ public class Lexer(string source)
     private Token HandleNumericToken(int startCol, int startRow)
     {
         string numericValue = string.Empty;
+        bool hasFoundDecimalPoint = false;
         
-        while (char.IsDigit(PeekCurrent()))
+        while (char.IsDigit(PeekCurrent()) || (PeekCurrent() == '.' && !hasFoundDecimalPoint))
         {
-            numericValue += Advance();
+            char c = Advance();
+            numericValue += c;
+            if (c == '.')
+            {
+                hasFoundDecimalPoint = true;
+            }
         }
         
         return new Token(TokenType.Numeric, numericValue, startCol, startRow);
@@ -146,7 +156,7 @@ public class Lexer(string source)
 
     private void ConsumeWhiteSpace()
     {
-        while (char.IsWhiteSpace(PeekCurrent()))
+        while (char.IsWhiteSpace(PeekCurrent()) && PeekCurrent() != '\n')
         {
             Advance();
         }
@@ -190,10 +200,10 @@ public class Lexer(string source)
     
     private void Expect(char expected, string errorMessage)
     {
-        char prevChar = _source[_index - 1];
-        if (IsEOF() || prevChar != expected)
+        if (IsEOF() || PeekCurrent() != expected)
         {
-            throw new SyntaxErrorException($"Lexing failure: syntax error at {_col}:{_row} expected: '{expected}' got: '{prevChar}'\n{errorMessage}");
+            // absolutely no idea why here it has to be _source[_index - 1] but it does
+            throw new SyntaxErrorException($"Lexing failure: syntax error at {_col}:{_row} expected: '{expected}' got: '{_source[_index - 1]}'\n{errorMessage}");
         }
     }
     
@@ -208,7 +218,8 @@ public class Lexer(string source)
         ["string"] = TokenType.StringType,
         ["fn"] = TokenType.FunctionDeclaration,
         ["if"] = TokenType.If,
-        ["elseif"] = TokenType.ElseIf,
+        ["elif"] = TokenType.ElseIf,
+        ["else"] = TokenType.Else,
         ["for"] = TokenType.ForLoop,
         ["while"] = TokenType.WhileLoop,
         ["class"] = TokenType.ClassDeclaration,
