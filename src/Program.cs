@@ -23,15 +23,24 @@ internal static class Program
         return tokenString;
     }
     
-    public static void Main()
+    public static void Main(string[] args)
     {
-        string source = File.ReadAllText("C:\\Users\\HarrisonO’Leary\\RiderProjects\\pysharp-good\\pysharp-good\\test.pys");
+        string source = File.ReadAllText(args[0]);
         Console.WriteLine(source + '\n');
 
         Lexer lexer = new(source);
         List<Token> tokens = lexer.ScanTokens();
 
+        Parser parser = new(tokens);
+        List<Expression> expressions = parser.Parse();
+
         string tokenString = GetPrettyTokenString(tokens);
+        
         Console.WriteLine(tokenString);
+        Console.WriteLine();
+        foreach (var expr in expressions)
+        {
+            Console.WriteLine(expr.ToString());
+        }
     }
 }

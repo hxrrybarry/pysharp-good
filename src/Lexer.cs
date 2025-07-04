@@ -155,7 +155,7 @@ public class Lexer(string source)
             }
         }
         
-        return new Token(TokenType.Numeric, numericValue, startCol, startRow);
+        return new Token(hasFoundDecimalPoint ? TokenType.Float : TokenType.Integer, numericValue, startCol, startRow);
     }
 
     private void ConsumeWhiteSpace()
@@ -214,10 +214,10 @@ public class Lexer(string source)
     private static readonly Dictionary<string, TokenType> Keywords = new()
     {
         ["let"] = TokenType.Let,
-        ["true"] = TokenType.BoolTrue,
-        ["false"] = TokenType.BoolFalse,
         ["int"] = TokenType.IntegerType,
         ["bool"] = TokenType.BoolType,
+        ["true"] = TokenType.Bool,
+        ["false"] = TokenType.Bool,
         ["float"] = TokenType.FloatType,
         ["string"] = TokenType.StringType,
         ["fn"] = TokenType.FunctionDeclaration,

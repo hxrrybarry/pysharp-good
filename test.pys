@@ -1,2 +1,0 @@
-﻿let string sausage = $"test"
-let string test = @sausage.symbol
