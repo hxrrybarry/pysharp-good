@@ -25,22 +25,16 @@ public class IntegerExpression(int val) : Expression
 public class FloatExpression(float val) : Expression
 {
     public float Value = val;
-
-    public override string ToString() => $"FLOAT: {Value}";
 }
 
 public class StringExpression(string val) : Expression
 {
     public string Value = val;
-
-    public override string ToString() => $"STRING: {Value}";
 }
 
 public class BooleanExpression(bool val) : Expression
 {
     public bool Value = val;
-
-    public override string ToString() => $"BOOL: {Value}";
 }
 
 public enum VariableBinding : byte
@@ -64,6 +58,7 @@ public class IdentifierExpression(string identifier) : Expression
 
 public class LetExpression(VariableBinding binding, IdentifierExpression identifier, Expression value) : VariableExpression(binding)
 {
-    public string Identifier = identifier;
+    public VariableBinding Binding = binding;
+    public IdentifierExpression Identifier = identifier;
     public Expression Value = value;
 }
